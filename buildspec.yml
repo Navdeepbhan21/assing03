@@ -1,0 +1,22 @@
+version: 0.2
+
+phases:
+  pre_build:
+    commands:
+      - echo Logging in to Amazon ECR...
+      - aws ecr get-login-password --region us-east-1 | docker login --username AWS --password-stdin 730335351482.dkr.ecr.us-east-1.amazonaws.com
+  build:
+    commands:
+      - echo Building the Docker image...
+      - docker build -t assign3-app .
+      - echo Tagging the image...
+      - docker tag assign3-app:latest 730335351482.dkr.ecr.us-east-1.amazonaws.com/assign3-app:latest
+      - echo Pushing the image to ECR...
+      - docker push 730335351482.dkr.ecr.us-east-1.amazonaws.com/assign3-app:latest
+  post_build:
+    commands:
+      - echo Build and push completed.
+
+artifacts:
+  files:
+    - '*/'
