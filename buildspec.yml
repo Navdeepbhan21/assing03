@@ -15,7 +15,7 @@ phases:
       - docker push 730335351482.dkr.ecr.us-east-1.amazonaws.com/assign3-app:latest
   post_build:
     commands:
-      - echo Build and push completed.
+      - - echo Creating imagedefinitions.json file...- printf '[{"name":"app-container","imageUri":"%s"}]' "730335351482.dkr.ecr.us-east-1.amazonaws.com/assign3-app:latest" > imagedefinitions.json
 
 artifacts:
   files:
